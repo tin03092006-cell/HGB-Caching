@@ -1,17 +1,18 @@
 {
   "method_requested": "auto",
-  "importance_source": "permutation_importance_fallback",
-  "input_feature_count": 30,
-  "selected_feature_count": 4,
-  "dropped_feature_count": 26,
+  "importance_source": "native_tree_importance",
+  "input_feature_count": 29,
+  "selected_feature_count": 5,
+  "dropped_feature_count": 24,
   "top_k": 20,
   "cumulative_importance_target": 0.95,
   "min_importance": 0.0,
   "max_samples": 20000,
   "n_repeats": 2,
   "selected_features": [
-    "age_seen",
     "ewma_freq",
+    "unique_since_last",
+    "recency",
     "freq_density",
     "size"
   ],
@@ -21,9 +22,7 @@
     "op_code",
     "ttl",
     "log_ttl",
-    "recency",
     "log_recency",
-    "count_w",
     "count_short",
     "count_mid",
     "count_long",
@@ -36,73 +35,73 @@
     "gap_cv",
     "burst_ratio",
     "acceleration",
-    "unique_since_last",
     "log_unique_since_last",
     "byte_freq",
     "byte_ewma",
     "byte_count_w",
+    "age_seen",
     "log_age_seen"
   ],
   "ranked_importance": [
     {
-      "feature": "age_seen",
-      "importance": 0.5612748125975028
-    },
-    {
       "feature": "ewma_freq",
-      "importance": 0.1445124345021683
-    },
-    {
-      "feature": "freq_density",
-      "importance": 0.12285974602028449
-    },
-    {
-      "feature": "size",
-      "importance": 0.12241365222357564
-    },
-    {
-      "feature": "gap_mean",
-      "importance": 0.04398295249988595
+      "importance": 0.5650889604421834
     },
     {
       "feature": "unique_since_last",
-      "importance": 0.0029276688439697812
-    },
-    {
-      "feature": "gap_cv",
-      "importance": 0.0014824245384062642
-    },
-    {
-      "feature": "byte_count_w",
-      "importance": 0.0005463087742067241
-    },
-    {
-      "feature": "log_recency",
-      "importance": 0.0
+      "importance": 0.2271999910589964
     },
     {
       "feature": "recency",
-      "importance": 0.0
+      "importance": 0.0798403491316497
     },
     {
-      "feature": "count_w",
-      "importance": 0.0
+      "feature": "freq_density",
+      "importance": 0.057356401850918434
     },
     {
-      "feature": "log_size",
-      "importance": 0.0
+      "feature": "size",
+      "importance": 0.03511252537890885
     },
     {
-      "feature": "ttl",
-      "importance": 0.0
+      "feature": "gap_cv",
+      "importance": 0.01914116975806214
     },
     {
-      "feature": "log_ttl",
-      "importance": 0.0
+      "feature": "prev_gap",
+      "importance": 0.004704025400761068
     },
     {
       "feature": "type_code",
-      "importance": 0.0
+      "importance": 0.004110553690851857
+    },
+    {
+      "feature": "gap_ewma",
+      "importance": 0.002205691536849877
+    },
+    {
+      "feature": "gap_mean",
+      "importance": 0.0019002936620778623
+    },
+    {
+      "feature": "byte_freq",
+      "importance": 0.0018650237988524774
+    },
+    {
+      "feature": "age_seen",
+      "importance": 0.0010381360372317087
+    },
+    {
+      "feature": "gap_std",
+      "importance": 0.000268223924596621
+    },
+    {
+      "feature": "byte_ewma",
+      "importance": 0.00012473590003695429
+    },
+    {
+      "feature": "byte_count_w",
+      "importance": 4.391842802278011e-05
     },
     {
       "feature": "op_code",
@@ -129,27 +128,19 @@
       "importance": 0.0
     },
     {
-      "feature": "gap_ewma",
+      "feature": "ttl",
       "importance": 0.0
     },
     {
-      "feature": "gap_std",
+      "feature": "log_ttl",
       "importance": 0.0
     },
     {
-      "feature": "prev_gap",
+      "feature": "log_recency",
       "importance": 0.0
     },
     {
-      "feature": "acceleration",
-      "importance": 0.0
-    },
-    {
-      "feature": "burst_ratio",
-      "importance": 0.0
-    },
-    {
-      "feature": "byte_freq",
+      "feature": "log_size",
       "importance": 0.0
     },
     {
@@ -157,7 +148,11 @@
       "importance": 0.0
     },
     {
-      "feature": "byte_ewma",
+      "feature": "burst_ratio",
+      "importance": 0.0
+    },
+    {
+      "feature": "acceleration",
       "importance": 0.0
     },
     {

@@ -4,7 +4,6 @@ __pycache__/
 *.pkl
 *.joblib
 *.zst
-results/*.csv
 results/*.json
 models/*.joblib
 data/*.csv

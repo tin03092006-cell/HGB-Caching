@@ -28,14 +28,7 @@
     "rows_after": 70000
   },
   "sample_weights": {
-    "strategy": "hybrid",
-    "enabled": true,
-    "hot_strength": 0.5,
-    "rare_strength": 0.75,
-    "size_strength": 0.25,
-    "max_weight": 20.0,
-    "weight_min": 0.7788694962425434,
-    "weight_mean": 1.0,
-    "weight_max": 1.0802834236736878
+    "strategy": "none",
+    "enabled": false
   }
 }

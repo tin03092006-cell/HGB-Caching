@@ -1,19 +1,20 @@
 {
-  "method_requested": "permutation",
-  "importance_source": "permutation_importance",
-  "input_feature_count": 30,
-  "selected_feature_count": 5,
-  "dropped_feature_count": 25,
-  "top_k": 15,
+  "method_requested": "auto",
+  "importance_source": "native_tree_importance",
+  "input_feature_count": 29,
+  "selected_feature_count": 6,
+  "dropped_feature_count": 23,
+  "top_k": 20,
   "cumulative_importance_target": 0.95,
   "min_importance": 0.0,
   "max_samples": 20000,
   "n_repeats": 2,
   "selected_features": [
-    "gap_mean",
-    "gap_ewma",
     "ewma_freq",
+    "unique_since_last",
     "freq_density",
+    "recency",
+    "gap_ewma",
     "size"
   ],
   "dropped_features": [
@@ -22,20 +23,18 @@
     "op_code",
     "ttl",
     "log_ttl",
-    "recency",
     "log_recency",
-    "count_w",
     "count_short",
     "count_mid",
     "count_long",
     "log_freq_seen",
     "last_gap",
     "prev_gap",
+    "gap_mean",
     "gap_std",
     "gap_cv",
     "burst_ratio",
     "acceleration",
-    "unique_since_last",
     "log_unique_since_last",
     "byte_freq",
     "byte_ewma",
@@ -45,64 +44,64 @@
   ],
   "ranked_importance": [
     {
-      "feature": "gap_mean",
-      "importance": 0.4755163083411799
-    },
-    {
-      "feature": "gap_ewma",
-      "importance": 0.1707626687889331
-    },
-    {
       "feature": "ewma_freq",
-      "importance": 0.12852025466549458
-    },
-    {
-      "feature": "freq_density",
-      "importance": 0.12061527377398139
-    },
-    {
-      "feature": "size",
-      "importance": 0.07169444784968099
-    },
-    {
-      "feature": "gap_cv",
-      "importance": 0.016730751714605516
+      "importance": 0.5459154964533384
     },
     {
       "feature": "unique_since_last",
-      "importance": 0.009383574780940672
+      "importance": 0.25666946743791536
     },
     {
-      "feature": "prev_gap",
-      "importance": 0.0038457573596892033
+      "feature": "freq_density",
+      "importance": 0.0549086028813859
+    },
+    {
+      "feature": "recency",
+      "importance": 0.051212118841535044
+    },
+    {
+      "feature": "gap_ewma",
+      "importance": 0.04010123665504936
+    },
+    {
+      "feature": "size",
+      "importance": 0.036344706170985196
     },
     {
       "feature": "type_code",
-      "importance": 0.001960782971467145
+      "importance": 0.004992900536942015
+    },
+    {
+      "feature": "prev_gap",
+      "importance": 0.003706221730589454
+    },
+    {
+      "feature": "gap_mean",
+      "importance": 0.0022709554592360535
     },
     {
       "feature": "byte_freq",
-      "importance": 0.0005225710695010516
+      "importance": 0.001679392131359358
+    },
+    {
+      "feature": "age_seen",
+      "importance": 0.0013901580080175717
+    },
+    {
+      "feature": "gap_std",
+      "importance": 0.0004406477371292428
+    },
+    {
+      "feature": "gap_cv",
+      "importance": 0.00023387554949101682
     },
     {
       "feature": "byte_count_w",
-      "importance": 0.00044760868452657887
+      "importance": 7.46899382250785e-05
     },
     {
-      "feature": "log_recency",
-      "importance": 0.0
-    },
-    {
-      "feature": "ttl",
-      "importance": 0.0
-    },
-    {
-      "feature": "log_ttl",
-      "importance": 0.0
-    },
-    {
-      "feature": "log_size",
-      "importance": 0.0
+      "feature": "byte_ewma",
+      "importance": 5.953046880095095e-05
     },
     {
       "feature": "op_code",
@@ -129,23 +128,19 @@
       "importance": 0.0
     },
     {
-      "feature": "count_w",
+      "feature": "ttl",
       "importance": 0.0
     },
     {
-      "feature": "recency",
+      "feature": "log_ttl",
       "importance": 0.0
     },
     {
-      "feature": "gap_std",
+      "feature": "log_recency",
       "importance": 0.0
     },
     {
-      "feature": "acceleration",
-      "importance": 0.0
-    },
-    {
-      "feature": "burst_ratio",
+      "feature": "log_size",
       "importance": 0.0
     },
     {
@@ -153,11 +148,11 @@
       "importance": 0.0
     },
     {
-      "feature": "byte_ewma",
+      "feature": "burst_ratio",
       "importance": 0.0
     },
     {
-      "feature": "age_seen",
+      "feature": "acceleration",
       "importance": 0.0
     },
     {
