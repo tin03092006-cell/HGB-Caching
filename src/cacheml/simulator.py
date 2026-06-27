@@ -47,21 +47,24 @@ def _base_metrics(
     )
 
 
-def simulate_lru(df: pd.DataFrame, cache_size: int) -> Metrics:
+def simulate_lru(df: pd.DataFrame, cache_size: int, warmup_n: int = 0) -> Metrics:
     cache, hits, byte_hits = OrderedDict(), 0, 0.0
-    for o, sz in zip(df["obj"].astype(str), df["size"].astype(float)):
+    sizes = df["size"].astype(float).to_numpy()
+    for i, (o, sz) in enumerate(zip(df["obj"].astype(str), sizes)):
         if o in cache:
-            hits += 1
-            byte_hits += sz
+            if i >= warmup_n:
+                hits += 1
+                byte_hits += sz
             cache.move_to_end(o)
         elif cache_size > 0:
             if len(cache) >= cache_size:
                 cache.popitem(last=False)
             cache[o] = None
-    return _base_metrics("LRU", len(df), hits, byte_hits, df["size"].sum())
+    n_eval = len(df) - warmup_n
+    return _base_metrics("LRU", n_eval, hits, byte_hits, float(sizes[warmup_n:].sum()))
 
 
-def simulate_lfu(df: pd.DataFrame, cache_size: int) -> Metrics:
+def simulate_lfu(df: pd.DataFrame, cache_size: int, warmup_n: int = 0) -> Metrics:
     cache, freq, ver, heap, hits, byte_hits = (
         set(),
         defaultdict(int),
@@ -70,10 +73,12 @@ def simulate_lfu(df: pd.DataFrame, cache_size: int) -> Metrics:
         0,
         0.0,
     )
-    for i, (o, sz) in enumerate(zip(df["obj"].astype(str), df["size"].astype(float))):
+    sizes = df["size"].astype(float).to_numpy()
+    for i, (o, sz) in enumerate(zip(df["obj"].astype(str), sizes)):
         if o in cache:
-            hits += 1
-            byte_hits += sz
+            if i >= warmup_n:
+                hits += 1
+                byte_hits += sz
         elif cache_size > 0:
             if len(cache) >= cache_size:
                 while heap:
@@ -85,10 +90,11 @@ def simulate_lfu(df: pd.DataFrame, cache_size: int) -> Metrics:
         freq[o] += 1
         ver[o] += 1
         heapq.heappush(heap, (freq[o], i, ver[o], o))
-    return _base_metrics("LFU", len(df), hits, byte_hits, df["size"].sum())
+    n_eval = len(df) - warmup_n
+    return _base_metrics("LFU", n_eval, hits, byte_hits, float(sizes[warmup_n:].sum()))
 
 
-def simulate_belady(df: pd.DataFrame, cache_size: int) -> Metrics:
+def simulate_belady(df: pd.DataFrame, cache_size: int, warmup_n: int = 0) -> Metrics:
     cache, ver, heap, hits, byte_hits = {}, defaultdict(int), [], 0, 0.0
     nat = (
         df["nat"].to_numpy(dtype=float)
@@ -96,11 +102,13 @@ def simulate_belady(df: pd.DataFrame, cache_size: int) -> Metrics:
         else np.full(len(df), len(df) + 1, dtype=float)
     )
     next_idx = np.where((idx := np.arange(len(df)) + nat) >= len(df), INF_NAT, idx)
-    for i, (o, sz) in enumerate(zip(df["obj"].astype(str), df["size"].astype(float))):
+    sizes = df["size"].astype(float).to_numpy()
+    for i, (o, sz) in enumerate(zip(df["obj"].astype(str), sizes)):
         nx = next_idx[i]
         if o in cache:
-            hits += 1
-            byte_hits += sz
+            if i >= warmup_n:
+                hits += 1
+                byte_hits += sz
         elif cache_size > 0:
             if len(cache) >= cache_size:
                 while heap:
@@ -112,7 +120,8 @@ def simulate_belady(df: pd.DataFrame, cache_size: int) -> Metrics:
             ver[o] += 1
             cache[o] = (nx, ver[o])
             heapq.heappush(heap, (-float(nx), ver[o], o))
-    return _base_metrics("Belady", len(df), hits, byte_hits, df["size"].sum())
+    n_eval = len(df) - warmup_n
+    return _base_metrics("Belady", n_eval, hits, byte_hits, float(sizes[warmup_n:].sum()))
 
 
 class CacheSet:
@@ -147,6 +156,7 @@ def simulate_ml_replacement(
     eviction_batch: int,
     random_state: int = 42,
     features: list[str] | None = None,
+    warmup_n: int = 0,
 ) -> Metrics:
     features = list(features or FEATURES)
     cache, victim_queue, state = CacheSet(), deque(), FeatureState(W, alpha, len(df))
@@ -203,9 +213,11 @@ def simulate_ml_replacement(
 
     for i, (o, sz, tc, oc, ttl) in enumerate(zip(objs, sizes, tcs, ocs, ttls)):
         state.meta[o] = (float(sz), float(tc), float(oc), float(ttl))
+        counting = i >= warmup_n
         if o in cache:
-            hits += 1
-            byte_hits += float(sz)
+            if counting:
+                hits += 1
+                byte_hits += float(sz)
         else:
             if len(cache) >= cache_size > 0 and (v := choose_victim(i, o)) in cache:
                 cache.remove(v)
@@ -213,12 +225,13 @@ def simulate_ml_replacement(
                 cache.add(o)
         state.update(o, i, float(sz), float(tc), float(oc), float(ttl))
 
+    n_eval = len(df) - warmup_n
     return _base_metrics(
         "ML",
-        len(df),
+        n_eval,
         hits,
         byte_hits,
-        float(sizes.sum()),
+        float(sizes[warmup_n:].sum()),
         latency,
         ai_calls,
         candidate_n,

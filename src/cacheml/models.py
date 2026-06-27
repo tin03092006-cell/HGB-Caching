@@ -28,6 +28,7 @@ def make_model(params: dict, cfg: CacheMLConfig):
         learning_rate=float(params.get("learning_rate", 0.05)),
         max_leaf_nodes=int(params.get("num_leaves", 31)),
         max_depth=int(params.get("max_depth", 8)),
+        min_samples_leaf=int(params.get("min_samples_leaf", 20)),
         l2_regularization=float(params.get("l2", 0.0)),
         early_stopping=True,
         random_state=cfg.random_state,

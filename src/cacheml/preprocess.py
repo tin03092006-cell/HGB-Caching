@@ -15,7 +15,6 @@ FEATURES = [
     "log_ttl",
     "recency",
     "log_recency",
-    "count_w",
     "count_short",
     "count_mid",
     "count_long",
@@ -176,7 +175,7 @@ class FeatureState:
         )
         vals = (
             sz, math.log1p(sz), tc, oc, ttl, math.log1p(max(0.0, ttl)),
-            rec, math.log1p(rec), cl, cs, cm, cl, ew, math.log1p(seen),
+            rec, math.log1p(rec), cs, cm, cl, ew, math.log1p(seen),
             seen / (age + 1.0), rec, prev, gew, gm, gs, gs / (gm + 1.0),
             cs / (cl + 1.0), cs - cm * (self.Ws / max(1.0, float(self.Wm))),
             unq, math.log1p(unq), sz * seen, sz * ew, sz * cl,
@@ -205,6 +204,7 @@ def build_features(df: pd.DataFrame, W: int, alpha: float) -> pd.DataFrame:
 
     for i in range(n):
         o, sz, tc, oc, ttl = objs[i], sizes[i], tcs[i], ocs[i], ttls[i]
+        state.meta[o] = (sz, tc, oc, ttl)
         vals = state.get_features(o, i, FEATURES)
         for j, f in enumerate(FEATURES):
             out[f][i] = vals[j]
@@ -213,7 +213,6 @@ def build_features(df: pd.DataFrame, W: int, alpha: float) -> pd.DataFrame:
     res = df.copy()
     for f in FEATURES:
         res[f] = out[f]
-    res["size"] = sizes
     return res
 
 

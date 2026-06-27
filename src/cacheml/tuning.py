@@ -42,8 +42,6 @@ def tune_optuna(
             "learning_rate": trial.suggest_float("learning_rate", 0.01, 0.2, log=True),
             "num_leaves": trial.suggest_int("num_leaves", 15, 127),
             "min_samples_leaf": trial.suggest_int("min_samples_leaf", 2, 100),
-            "subsample": trial.suggest_float("subsample", 0.7, 1.0),
-            "colsample": trial.suggest_float("colsample", 0.7, 1.0),
             "l2": trial.suggest_float("l2", 1e-10, 1.0, log=True),
         }
         model = make_model(params, cfg)
@@ -52,7 +50,7 @@ def tune_optuna(
         else:
             model.fit(X_train, y_train, sample_weight=w_train)
         m = simulate_ml_replacement(
-            valid_df,
+            pd.concat([train_df, valid_df], ignore_index=True),
             cache_size=cache_size,
             model=model,
             W=W,
@@ -61,6 +59,7 @@ def tune_optuna(
             eviction_batch=eviction_batch,
             random_state=cfg.random_state,
             features=features,
+            warmup_n=len(train_df),
         )
         return m.byte_hit_rate
 
@@ -96,4 +95,6 @@ def tune_optuna(
         print(
             "Stopped by user. Current best params were saved to results/best_params.json if at least one trial finished."
         )
+    if not study.trials:
+        raise RuntimeError("No Optuna trial completed. Cannot determine best params.")
     return study.best_params, float(study.best_value)

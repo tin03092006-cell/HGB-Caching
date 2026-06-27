@@ -100,13 +100,13 @@ def _do_optuna_tuning(args, cfg, df, train_df, valid_df, W, alpha, candidate_n, 
     return model, params, plan
 
 
-def _run_simulations(args, cfg, test_df, model, W, alpha, candidate_n, eviction_batch, selected_features):
+def _run_simulations(args, cfg, df, warmup_n, model, W, alpha, candidate_n, eviction_batch, selected_features):
     rows = [
-        simulate_belady(test_df, args.cache_size).to_dict(),
-        simulate_lru(test_df, args.cache_size).to_dict(),
-        simulate_lfu(test_df, args.cache_size).to_dict(),
+        simulate_belady(df, args.cache_size, warmup_n).to_dict(),
+        simulate_lru(df, args.cache_size, warmup_n).to_dict(),
+        simulate_lfu(df, args.cache_size, warmup_n).to_dict(),
         simulate_ml_replacement(
-            test_df,
+            df,
             cache_size=args.cache_size,
             model=model,
             W=W,
@@ -115,9 +115,10 @@ def _run_simulations(args, cfg, test_df, model, W, alpha, candidate_n, eviction_
             eviction_batch=eviction_batch,
             random_state=cfg.random_state,
             features=selected_features,
+            warmup_n=warmup_n,
         ).to_dict(),
     ]
-    res = pd.DataFrame(rows).sort_values("hit_rate", ascending=False)
+    res = pd.DataFrame(rows).sort_values("byte_hit_rate", ascending=False)
     out_csv = Path(args.results_dir) / "benchmark.csv"
     res.to_csv(out_csv, index=False)
     print("\nBenchmark:")
@@ -188,7 +189,8 @@ def cmd_bench(args):
     print(f"wrote {Path(args.results_dir) / 'hardware_plan.json'}")
 
     # Simulation extraction
-    _run_simulations(args, cfg, test_df, model, W, alpha, candidate_n, eviction_batch, selected_features)
+    warmup_n = len(train_df) + len(valid_df)
+    _run_simulations(args, cfg, df, warmup_n, model, W, alpha, candidate_n, eviction_batch, selected_features)
 
 
 def _add_common_args(parser):
