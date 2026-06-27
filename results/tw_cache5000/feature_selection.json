@@ -1,0 +1,168 @@
+{
+  "method_requested": "permutation",
+  "importance_source": "permutation_importance",
+  "input_feature_count": 30,
+  "selected_feature_count": 5,
+  "dropped_feature_count": 25,
+  "top_k": 15,
+  "cumulative_importance_target": 0.95,
+  "min_importance": 0.0,
+  "max_samples": 20000,
+  "n_repeats": 2,
+  "selected_features": [
+    "gap_mean",
+    "age_seen",
+    "ewma_freq",
+    "freq_density",
+    "size"
+  ],
+  "dropped_features": [
+    "log_size",
+    "type_code",
+    "op_code",
+    "ttl",
+    "log_ttl",
+    "recency",
+    "log_recency",
+    "count_w",
+    "count_short",
+    "count_mid",
+    "count_long",
+    "log_freq_seen",
+    "last_gap",
+    "prev_gap",
+    "gap_ewma",
+    "gap_std",
+    "gap_cv",
+    "burst_ratio",
+    "acceleration",
+    "unique_since_last",
+    "log_unique_since_last",
+    "byte_freq",
+    "byte_ewma",
+    "byte_count_w",
+    "log_age_seen"
+  ],
+  "ranked_importance": [
+    {
+      "feature": "gap_mean",
+      "importance": 0.34594395384217785
+    },
+    {
+      "feature": "age_seen",
+      "importance": 0.24874277526520577
+    },
+    {
+      "feature": "ewma_freq",
+      "importance": 0.1657235959233863
+    },
+    {
+      "feature": "freq_density",
+      "importance": 0.12586337538222261
+    },
+    {
+      "feature": "size",
+      "importance": 0.10956356685838747
+    },
+    {
+      "feature": "byte_ewma",
+      "importance": 0.0019939996727905713
+    },
+    {
+      "feature": "gap_cv",
+      "importance": 0.001743103085658541
+    },
+    {
+      "feature": "byte_count_w",
+      "importance": 0.00042562997017083637
+    },
+    {
+      "feature": "log_recency",
+      "importance": 0.0
+    },
+    {
+      "feature": "recency",
+      "importance": 0.0
+    },
+    {
+      "feature": "count_w",
+      "importance": 0.0
+    },
+    {
+      "feature": "log_size",
+      "importance": 0.0
+    },
+    {
+      "feature": "ttl",
+      "importance": 0.0
+    },
+    {
+      "feature": "log_ttl",
+      "importance": 0.0
+    },
+    {
+      "feature": "type_code",
+      "importance": 0.0
+    },
+    {
+      "feature": "op_code",
+      "importance": 0.0
+    },
+    {
+      "feature": "last_gap",
+      "importance": 0.0
+    },
+    {
+      "feature": "log_freq_seen",
+      "importance": 0.0
+    },
+    {
+      "feature": "count_mid",
+      "importance": 0.0
+    },
+    {
+      "feature": "count_long",
+      "importance": 0.0
+    },
+    {
+      "feature": "count_short",
+      "importance": 0.0
+    },
+    {
+      "feature": "gap_std",
+      "importance": 0.0
+    },
+    {
+      "feature": "gap_ewma",
+      "importance": 0.0
+    },
+    {
+      "feature": "prev_gap",
+      "importance": 0.0
+    },
+    {
+      "feature": "unique_since_last",
+      "importance": 0.0
+    },
+    {
+      "feature": "acceleration",
+      "importance": 0.0
+    },
+    {
+      "feature": "burst_ratio",
+      "importance": 0.0
+    },
+    {
+      "feature": "byte_freq",
+      "importance": 0.0
+    },
+    {
+      "feature": "log_unique_since_last",
+      "importance": 0.0
+    },
+    {
+      "feature": "log_age_seen",
+      "importance": 0.0
+    }
+  ]
+}

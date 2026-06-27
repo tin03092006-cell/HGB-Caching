@@ -1,0 +1,43 @@
+{
+  "before": {
+    "rows": 70000,
+    "objects": 59753,
+    "max_freq": 530,
+    "median_freq": 1.0,
+    "mean_freq": 1.1714892976084883,
+    "one_hit_objects": 56153,
+    "one_hit_object_ratio": 0.9397519789801348,
+    "top_1pct_request_share": 0.09848571428571429,
+    "top_5pct_request_share": 0.18032857142857142
+  },
+  "after": {
+    "rows": 69670,
+    "objects": 59753,
+    "max_freq": 200,
+    "median_freq": 1.0,
+    "mean_freq": 1.165966562348334,
+    "one_hit_objects": 56153,
+    "one_hit_object_ratio": 0.9397519789801348,
+    "top_1pct_request_share": 0.09421558777092005,
+    "top_5pct_request_share": 0.17644610305727
+  },
+  "downsampling": {
+    "enabled": true,
+    "max_per_object": 200,
+    "rows_before": 70000,
+    "rows_after": 69670,
+    "removed_rows": 330,
+    "capped_objects": 1
+  },
+  "sample_weights": {
+    "strategy": "hybrid",
+    "enabled": true,
+    "hot_strength": 0.5,
+    "rare_strength": 0.75,
+    "size_strength": 0.25,
+    "max_weight": 20.0,
+    "weight_min": 0.7669529934596097,
+    "weight_mean": 1.0,
+    "weight_max": 1.0884195859728187
+  }
+}

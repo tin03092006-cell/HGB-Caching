@@ -1,0 +1,12 @@
+.venv/
+__pycache__/
+*.pyc
+*.pkl
+*.joblib
+*.zst
+results/*.csv
+results/*.json
+models/*.joblib
+data/*.csv
+data/*.pkl
+data/raw/

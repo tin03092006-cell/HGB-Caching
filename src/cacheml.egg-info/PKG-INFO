@@ -1,0 +1,5 @@
+Metadata-Version: 2.4
+Name: cacheml
+Version: 0.4.0
+Summary: ML-augmented cache replacement benchmark with no admission rejection and full CPU/RAM mode
+Requires-Python: >=3.10
