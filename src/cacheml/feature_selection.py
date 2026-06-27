@@ -16,6 +16,16 @@ def _tree_importance(model: Any, features: list[str]) -> np.ndarray | None:
             imp
         ).shape[0] == len(features):
             return _normalize(imp)
+    if hasattr(model, "_predictors"):
+        imp = np.zeros(len(features), dtype=float)
+        for class_trees in model._predictors:
+            for tree in class_trees:
+                for n in tree.nodes:
+                    if not n["is_leaf"] and 0 <= (i := int(n["feature_idx"])) < len(
+                        features
+                    ):
+                        imp[i] += float(n["gain"])
+        return _normalize(imp)
     return None
 
 
