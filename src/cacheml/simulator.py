@@ -91,7 +91,7 @@ def simulate_lfu(df: pd.DataFrame, cache_size: int, warmup_n: int = 0) -> Metric
         ver[o] += 1
         heapq.heappush(heap, (freq[o], i, ver[o], o))
     n_eval = len(df) - warmup_n
-    return _base_metrics("LFU", n_eval, hits, byte_hits, float(sizes[warmup_n:].sum()))
+    return _base_metrics("Global-LFU", n_eval, hits, byte_hits, float(sizes[warmup_n:].sum()))
 
 
 def simulate_belady(df: pd.DataFrame, cache_size: int, warmup_n: int = 0) -> Metrics:

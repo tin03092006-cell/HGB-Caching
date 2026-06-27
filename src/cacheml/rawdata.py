@@ -16,10 +16,11 @@ def convert_twitter(raw: str, out: str, max_rows: int = 0) -> int:
                 bad_rows += 1
                 continue
             try:
+                # Twitter format = timestamp,key,key_size,value_size,client_id,op,ttl
                 w.writerow(
                     [
                         row[1],
-                        max(float(row[3]), float(row[2]), 1.0),
+                        max(float(row[3]) + float(row[2]), 1.0),
                         row[4],
                         float(row[0]),
                         row[5].strip().lower(),

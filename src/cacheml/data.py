@@ -10,6 +10,8 @@ def load_trace(path: str, max_rows: int = 0) -> pd.DataFrame:
     nrows = None if not max_rows or max_rows <= 0 else int(max_rows)
     # The dataset is strictly CSV with obj,size,type,timestamp,op,ttl
     df = pd.read_csv(p, nrows=nrows)
+    if not df["timestamp"].is_monotonic_increasing:
+        df = df.sort_values("timestamp", kind="mergesort").reset_index(drop=True)
 
     out = pd.DataFrame()
     out["obj"] = df["obj"].astype(str)

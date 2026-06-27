@@ -95,6 +95,6 @@ def tune_optuna(
         print(
             "Stopped by user. Current best params were saved to results/best_params.json if at least one trial finished."
         )
-    if not study.trials:
+    if not any(t.state.name == "COMPLETE" for t in study.trials):
         raise RuntimeError("No Optuna trial completed. Cannot determine best params.")
     return study.best_params, float(study.best_value)
